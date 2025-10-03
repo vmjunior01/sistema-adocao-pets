@@ -1,0 +1,50 @@
+// Define o tipo de banco de dados (Você deve configurar para o seu)
+datasource db {
+  provider = "postgresql" // Mude para "mysql" se for o caso
+  url      = env("DATABASE_URL")
+}
+
+// Define o Prisma Client para Node.js
+generator client {
+  provider = "prisma-client-js"
+}
+
+// Modelo 1: PET (Tabela Pets)
+model Pet {
+  id              Int       @id @default(autoincrement())
+  nome            String    @db.VarChar(100)
+  especie         String    @db.VarChar(50)
+  dataNascimento  DateTime  // Data de nascimento aproximada [cite: 17]
+  descricao       String?   @db.Text // Texto opcional para a personalidade [cite: 18]
+  status          String    @default("disponível") // "disponível" ou "adotado" [cite: 19]
+
+  // Relacionamento com Adoção: um Pet pode ter muitas adoções (em tese, se voltasse ao abrigo)
+  // Mas para o contexto de "status" no projeto, vamos usar o relacionamento 1:1 para simplificar
+  adocao          Adocao?   @relation("PetToAdocao")
+}
+
+// Modelo 2: ADOTANTE (Tabela Adotantes)
+model Adotante {
+  id              Int       @id @default(autoincrement())
+  nomeCompleto    String    @db.VarChar(255)
+  email           String    @unique // O email deve ser único
+  telefone        String?   @db.VarChar(20)
+  endereco        String?   @db.VarChar(255)
+
+  // Relacionamento com Adoção: Um adotante pode ter muitas adoções
+  adocoes         Adocao[]  @relation("AdotanteToAdocao")
+}
+
+// Modelo 3: ADOCAO (Tabela de Relacionamento N:1 entre Adotante e Pet)
+model Adocao {
+  id              Int       @id @default(autoincrement())
+  dataAdocao      DateTime  @default(now())
+
+  // Chave Estrangeira e Relacionamento com PET
+  petId           Int       @unique // Uma adoção é ligada a UM pet. O @unique garante que o pet não seja adotado duas vezes
+  pet             Pet       @relation("PetToAdocao", fields: [petId], references: [id])
+
+  // Chave Estrangeira e Relacionamento com ADOTANTE
+  adotanteId      Int
+  adotante        Adotante  @relation("AdotanteToAdocao", fields: [adotanteId], references: [id])
+}
