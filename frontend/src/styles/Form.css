@@ -1,0 +1,74 @@
+/* frontend/src/styles/Form.css */
+
+.form-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+.form-container {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 500px; /* Limita a largura para melhor leitura */
+}
+
+.form-container h2 {
+    color: var(--color-primary);
+    margin-bottom: 24px;
+    text-align: center;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 700;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+}
+
+.form-button {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: var(--color-primary);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.form-button:hover {
+    background-color: #2F888A; /* Tom ligeiramente mais escuro */
+}
+
+.success-message {
+    color: var(--color-primary);
+    text-align: center;
+    font-weight: 700;
+    margin-top: 20px;
+}
+
+.error-message {
+    color: var(--color-adopted); /* Usa o vermelho de 'Adotado' para erros */
+    text-align: center;
+    margin-top: 20px;
+}

@@ -1,0 +1,38 @@
+/* frontend/src/styles/Header.css */
+
+.main-header {
+    background-color: white; /* Fundo branco para contraste */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Sombra suave */
+    padding: var(--spacing-unit) calc(4 * var(--spacing-unit)); /* 8px ou 32px de padding nas laterais */
+    display: flex;
+    justify-content: space-between; /* Mantém logo na esquerda, links na direita */
+    align-items: center;
+    position: sticky; /* Fica fixo no topo da página */
+    top: 0;
+    z-index: 1000;
+}
+
+.header-logo {
+    color: var(--color-primary);
+    font-size: 1.8rem;
+    font-weight: 700;
+    text-decoration: none; /* Remove sublinhado */
+}
+
+.header-nav {
+    display: flex;
+    gap: calc(3 * var(--spacing-unit)); /* Espaçamento entre os links (24px) */
+}
+
+.nav-link {
+    color: var(--color-text-dark);
+    text-decoration: none;
+    font-size: 1rem;
+    padding: var(--spacing-unit) 0;
+    transition: color 0.3s ease;
+}
+
+/* Efeito ao passar o mouse */
+.nav-link:hover {
+    color: var(--color-primary);
+}

@@ -1,0 +1,22 @@
+/* frontend/src/styles/HomePage.css */
+
+.homepage-container {
+    padding: calc(4 * var(--spacing-unit)); /* 32px de padding */
+    max-width: 1200px; /* Limita a largura do conteúdo */
+    margin: 0 auto; /* Centraliza o contêiner */
+}
+
+.homepage-container h2 {
+    color: var(--color-primary);
+    margin-bottom: calc(4 * var(--spacing-unit));
+    text-align: center;
+}
+
+.pets-grid {
+    display: grid;
+    /* Cria um layout responsivo: 
+       mínimo de 300px por coluna, e quantas couberem */
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: calc(3 * var(--spacing-unit)); /* Espaçamento de 24px entre os cartões */
+    justify-content: center;
+}

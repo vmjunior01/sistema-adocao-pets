@@ -1,0 +1,71 @@
+/* frontend/src/styles/PetDetail.css */
+
+.detail-container {
+    padding: calc(6 * var(--spacing-unit)) calc(4 * var(--spacing-unit)); /* Padding maior */
+    max-width: 1000px;
+    margin: 0 auto;
+}
+
+.detail-name {
+    color: var(--color-primary);
+    text-align: center;
+    margin-bottom: 30px;
+    font-size: 2.5rem;
+}
+
+.detail-content-wrapper {
+    display: flex;
+    gap: 40px;
+    background-color: white;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+.detail-image-box {
+    flex: 1; /* Ocupa metade do espaço */
+    max-width: 50%;
+    overflow: hidden;
+}
+
+.detail-image {
+    width: 100%;
+    height: auto;
+    display: block;
+}
+
+.detail-info-box {
+    flex: 1; /* Ocupa a outra metade */
+    padding: 30px;
+}
+
+.detail-info-box h2 {
+    color: var(--color-text-dark);
+    margin-bottom: 20px;
+    border-bottom: 2px solid var(--color-secondary);
+    padding-bottom: 5px;
+}
+
+.detail-info-box p {
+    margin-bottom: 10px;
+    font-size: 1.1rem;
+}
+
+.detail-status {
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: 30px;
+}
+
+/* Estilo para o Form Container dentro da página de detalhes */
+.detail-info-box .form-container {
+    padding: 20px;
+    box-shadow: none; /* Remove a sombra do container interno */
+    border: 1px solid #eee;
+}
+
+.adoção-instrução {
+    font-size: 0.9rem;
+    color: #666;
+    margin-bottom: 15px;
+}

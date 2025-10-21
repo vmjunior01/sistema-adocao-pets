@@ -3,11 +3,26 @@
 // 1. Importa Express e o Prisma Client
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import cors from 'cors';
 
 // 2. Inicializa o Express e o Prisma
 const app = express();
 const prisma = new PrismaClient();
 const PORT = 3000;
+
+// Configuração do CORS: Permite que o Frontend (porta 5173) acesse o Backend
+const corsOptions = {
+    origin: 'http://localhost:5173', // A porta onde o seu React está rodando
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    credentials: true,
+    optionsSuccessStatus: 204
+};
+
+// 3. Middlewares
+// Aplica o middleware do CORS antes de qualquer rota
+app.use(cors(corsOptions)); // Habilita CORS com opções
+app.use(express.json());
+
 
 // 3. Middlewares (para o Express entender JSON)
 app.use(express.json());
@@ -22,13 +37,14 @@ app.get('/', (req, res) => {
 app.post('/pets', async (req, res) => {
   try {
     const { nome, especie, dataNascimento, descricao } = req.body;
+    const dataNascimentoFormatada = new Date(dataNascimento).toISOString();
 
     const novoPet = await prisma.pet.create({
       data: {
-        nome,
-        especie,
-        dataNascimento: new Date(dataNascimento), // Converte a string para objeto Date
-        descricao,
+         nome,
+         especie,
+         dataNascimento: dataNascimentoFormatada, // Usa a string ISO formatada
+         descricao,
         // Status é 'disponível' por padrão (definido no schema.prisma)
       },
     });
