@@ -2,9 +2,8 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import '../styles/PetCard.css'; // Vamos criar este arquivo de estilo
+import '../styles/PetCard.css';
 
-// Função utilitária para calcular a idade (aproximada) em anos
 const calcularIdade = (dataNascimento) => {
   const hoje = new Date();
   const nascimento = new Date(dataNascimento);
@@ -18,25 +17,19 @@ const calcularIdade = (dataNascimento) => {
 };
 
 const PetCard = ({ pet }) => {
-  // Simulação de URL de imagem baseada na espécie
-  // Lógica para decidir qual placeholder de imagem usar
 const especieLowerCase = pet.especie ? pet.especie.toLowerCase() : '';
 
 let imageUrl;
 
 if (especieLowerCase === 'cachorro') {
-    // URL de cachorros (PlaceDog) - Estável
     imageUrl = `https://placedog.net/300/200?random=${pet.id}`; 
 } else if (especieLowerCase === 'gato') {
-    // NOVO: Usando cataas.com/cat/ com parâmetros de largura/altura
-    // Este endpoint retorna uma imagem pura, sem o texto 'Miau'.
     imageUrl = `https://cataas.com/cat?width=300&height=200&v=${pet.id}`; 
 } else {
-    // Placeholder genérico para "outros"
     imageUrl = `https://via.placeholder.com/300x200?text=${pet.nome}`;
 }
   const idade = calcularIdade(pet.dataNascimento);
-  const idadeTexto = idade === 1 ? 'ano' : 'anos'; // Define 'ano' ou 'anos'
+  const idadeTexto = idade === 1 ? 'ano' : 'anos'; 
 
   return (
     <div className="pet-card">
@@ -53,7 +46,6 @@ if (especieLowerCase === 'cachorro') {
             <span className="detail-label">Idade:</span> {idade} {idadeTexto}
         </p>
         
-        {/* Link para a página de Detalhes e Adoção */}
         <Link to={`/pets/${pet.id}`} className="details-button">
           Ver Detalhes
         </Link>

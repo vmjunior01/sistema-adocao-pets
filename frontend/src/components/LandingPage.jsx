@@ -23,7 +23,7 @@ export default function LandingPage() {
             carinho. Adotar é fácil, seguro e a maior prova de amor!
           </p>
           <a href='#como-funciona' className='cta-button primary'>
-            Quero adotar agora!
+            Como faço para adotar?
           </a>
         </div>
       </section>
@@ -100,7 +100,7 @@ export default function LandingPage() {
           </div>
 
           <Link to='/pets' className='cta-button secondary'>
-            Ver Animais Disponíveis
+            Ver animais disponíveis
           </Link>
         </div>
       </section>
