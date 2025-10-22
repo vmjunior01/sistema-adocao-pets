@@ -4,75 +4,108 @@ import HeroBg from '../assets/hero-bg.jpg';
 import CheckIcon from '../assets/check.png';
 import PetsGrid from '../assets/pets-grid.jpg';
 import { Link } from 'react-router-dom';
+import HeaderLanding from './HeaderLanding';
+import Footer from './Footer';
 
 export default function LandingPage() {
   return (
-    <div className="adopet-landing">
+    <div className='adopet-landing'>
+      <HeaderLanding />
 
-      <section className="hero-section" style={{ backgroundImage: `url(${HeroBg})` }}>
-        <div className="hero-content">
-          <h1>Encontre o seu Novo Melhor Amigo na Adopet.</h1>
-          <p className="subtitle">
-            Conectamos corações em busca de um lar com patinhas ansiosas por carinho. Adotar é fácil, seguro e a maior prova de amor!
+      <section
+        className='hero-section'
+        style={{ backgroundImage: `url(${HeroBg})` }}
+      >
+        <div className='hero-content'>
+          <h1>Encontre o seu novo melhor amigo na Adopet.</h1>
+          <p className='subtitle'>
+            Conectamos corações em busca de um lar com patinhas ansiosas por
+            carinho. Adotar é fácil, seguro e a maior prova de amor!
           </p>
-          <a href="#como-funciona" className="cta-button primary">
-            Quero Adotar Agora!
+          <a href='#como-funciona' className='cta-button primary'>
+            Quero adotar agora!
           </a>
         </div>
       </section>
 
-      <section className="benefits-section">
-        <h2 className="section-title">Por Que Escolher a Adopet?</h2>
-        <div className="benefits-grid">
-          <div className="benefit-card">
-            <img src={CheckIcon} alt="Ícone de Visto" className="check-icon" />
-            <h3>Processo Descomplicado</h3>
-            <p>Suporte completo e humanizado para garantir uma adoção tranquila, do início ao fim.</p>
+      <section className='benefits-section'>
+        <h2 className='section-title'>Por que escolher a Adopet?</h2>
+        <div className='benefits-grid'>
+          <div className='benefit-card'>
+            <img src={CheckIcon} alt='Ícone de Visto' className='check-icon' />
+            <h3>Processo descomplicado</h3>
+            <p>
+              Suporte completo e humanizado para garantir uma adoção tranquila,
+              do início ao fim.
+            </p>
           </div>
-          <div className="benefit-card">
-            <img src={CheckIcon} alt="Ícone de Visto" className="check-icon" />
-            <h3>Animais Vacinados e Castrados</h3>
-            <p>Todos os nossos pets são entregues com a saúde em dia, prontos para a nova vida.</p>
+          <div className='benefit-card'>
+            <img src={CheckIcon} alt='Ícone de Visto' className='check-icon' />
+            <h3>Animais vacinados e castrados</h3>
+            <p>
+              Todos os nossos pets são entregues com a saúde em dia, prontos
+              para a nova vida.
+            </p>
           </div>
-          <div className="benefit-card">
-            <img src={CheckIcon} alt="Ícone de Visto" className="check-icon" />
-            <h3>Busca Personalizada</h3>
-            <p>Filtros avançados que ajudam você a encontrar o pet que realmente combina com seu estilo de vida.</p>
+          <div className='benefit-card'>
+            <img src={CheckIcon} alt='Ícone de Visto' className='check-icon' />
+            <h3>Busca personalizada</h3>
+            <p>
+              Filtros avançados que ajudam você a encontrar o pet que realmente
+              combina com seu estilo de vida.
+            </p>
           </div>
         </div>
       </section>
 
-      <section className="process-section" id="como-funciona">
-        <div className="process-image-container">
-            <img src={PetsGrid} alt="Vários animais fofos em adoção" className="process-image" />
+      <section className='process-section' id='como-funciona'>
+        <div className='process-image'>
+          <img
+            src={PetsGrid}
+            alt='Vários animais fofos em adoção'
+            className='process-image'
+          />
         </div>
-        <div className="process-steps">
-          <h2 className="section-title">O Caminho para um Lar Feliz</h2>
-          
-          <div className="step">
-            <span className="step-number">1</span>
-            <h3>Pesquise e Encontre</h3>
-            <p>Use nossos filtros para visualizar cães e gatos disponíveis próximos a você.</p>
-          </div>
-          
-          <div className="step">
-            <span className="step-number">2</span>
-            <h3>Entre em contato</h3>
-            <p>Converse com nossos colaboradores.</p>
+        <div className='process-steps'>
+          <h2 className='section-title'>O caminho para um lar feliz:</h2>
+
+          <div className='step'>
+            <span className='step-number'>1</span>
+            <span className='step-text'>
+              <h3>Pesquise e Encontre</h3>
+              <p>
+                Use nossos filtros para visualizar cães e gatos disponíveis
+                próximos a você.
+              </p>
+            </span>
           </div>
 
-          <div className="step">
-            <span className="step-number">3</span>
-            <h3>Conheça e Adote!</h3>
-            <p>Agende uma visita ao abrigo e leve seu novo amigo para casa. É alegria garantida!</p>
+          <div className='step'>
+            <span className='step-number'>2</span>
+            <span className='step-text'>
+              <h3>Entre em contato com a gente</h3>
+              <p>Converse com nossos colaboradores.</p>
+            </span>
           </div>
 
-          <Link to="/pets" className="cta-button secondary">
+          <div className='step'>
+            <span className='step-number'>3</span>
+            <span className='step-text'>
+              <h3>Conheça e Adote!</h3>
+              <p>
+                Agende uma visita ao abrigo e leve seu novo amigo para casa. É
+                alegria garantida!
+              </p>
+            </span>
+          </div>
+
+          <Link to='/pets' className='cta-button secondary'>
             Ver Animais Disponíveis
           </Link>
         </div>
       </section>
-      
+
+      <Footer />
     </div>
   );
-};
+}

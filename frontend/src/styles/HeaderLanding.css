@@ -25,11 +25,12 @@
 
 .header-nav svg {
   fill: var(--color-text);
+  transition: color 0.3s ease;
 }
 
 .header-nav svg:hover {
   fill: var(--color-primary);
-  scale: 1.1;
+  transform: translateY(-2px);
 }
 
 .button-link {
@@ -42,5 +43,7 @@
 }
 
 .button-link:hover {
-  background-color: #206768;
+  background-color: #501f4b;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
