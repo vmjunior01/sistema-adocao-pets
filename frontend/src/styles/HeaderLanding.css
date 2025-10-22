@@ -1,0 +1,46 @@
+.main-header {
+  height: 80px;
+  background-color: var(--color-zero);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0px 32px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+.header-logo {
+  height: 50px;
+}
+
+.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+.header-nav svg {
+  fill: var(--color-text);
+}
+
+.header-nav svg:hover {
+  fill: var(--color-primary);
+  scale: 1.1;
+}
+
+.button-link {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  text-decoration: none;
+  padding: 10px;
+  border-radius: 5px;
+  transition: color 0.3s ease;
+}
+
+.button-link:hover {
+  background-color: #206768;
+}

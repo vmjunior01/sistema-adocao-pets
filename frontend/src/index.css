@@ -3,15 +3,16 @@
 /* Define cores e fontes globais */
 :root {
   /* Cores */
-  --color-primary: #38A3A5; /* Botões, Destaques */
-  --color-secondary: #57CC99; /* Fundo de Cards */
-  --color-background: #F8F9FA; /* Fundo da Página */
-  --color-text-dark: #212529; /* Textos e Títulos */
-  --color-adopted: #FF6B6B; /* Status "Adotado" */
-  
+  --color-primary: #38a3a5; /* Botões, Destaques */
+  --color-secondary: #57cc99; /* Fundo de Cards */
+  --color-background: #f8f9fa; /* Fundo da Página */
+  --color-text: #131313; /* Textos e Títulos */
+  --color-adopted: #ff6b6b; /* Status "Adotado" */
+  --color-zero: #ffffff;
+
   /* Tipografia */
   --font-family-sans: 'Roboto', sans-serif; /* Sugestão de fonte limpa */
-  
+
   /* Espaçamento Básico (Para consistência) */
   --spacing-unit: 8px;
 }
@@ -30,3 +31,10 @@ body {
 }
 
 /* Adicione a importação da fonte Roboto no seu index.html se desejar */
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+}

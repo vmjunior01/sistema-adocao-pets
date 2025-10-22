@@ -1,20 +1,30 @@
-// frontend/src/App.jsx
+import { useLocation, Outlet } from 'react-router-dom'; // <--- Importe useLocation
+import Header from './components/Header'; // O Header Padrão
+import HeaderLanding from './components/HeaderLanding'; // O Header Único da Home
+import Footer from './components/Footer'; 
+import LandingPage from './components/LandingPage';
 
-import React from 'react';
-import Header from './components/Header';
-// Importamos o Outlet para renderizar o componente da rota ativa
-import { Outlet } from 'react-router-dom';
+export default function App() {
+  const location = useLocation(); // <--- Pega a informação da URL atual
+  
+  // 1. Variável booleana para verificar se é a página principal (URL raiz "/")
+  const isHomePage = location.pathname === '/'; 
 
-function App() {
+  // 2. Decide qual componente Header usar
+  const CurrentHeader = isHomePage ? HeaderLanding : Header;
+
   return (
-    <>
-      <Header />
+    <div className="app-container">
+      
+      {/* 3. Renderiza o Header selecionado */}
+      <CurrentHeader /> 
+      
       <main className="main-content">
-        {/* O Outlet renderizará a HomePage, CadastroPetPage, etc. aqui */}
-        <Outlet /> 
+        {/* <Outlet />  */}
+        <LandingPage />
       </main>
-    </>
+      
+      <Footer/>
+    </div>
   );
 }
-
-export default App;
