@@ -1,8 +1,13 @@
-// frontend/src/components/PetCard.jsx
-
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
 import '../styles/PetCard.css';
+
+const limitarDescricao = (descricao, limite = 100) => {
+  if (!descricao) return 'Sem descrição.';
+  if (descricao.length <= limite) return descricao;
+  return descricao.substring(0, limite) + '...';
+};
 
 const calcularIdade = (dataNascimento) => {
   const hoje = new Date();
@@ -17,38 +22,54 @@ const calcularIdade = (dataNascimento) => {
 };
 
 const PetCard = ({ pet }) => {
-const especieLowerCase = pet.especie ? pet.especie.toLowerCase() : '';
+  const { isLoggedIn } = useAuth();
 
-let imageUrl;
+  const especieLowerCase = pet.especie ? pet.especie.toLowerCase() : '';
 
-if (especieLowerCase === 'cachorro') {
-    imageUrl = `https://placedog.net/300/200?random=${pet.id}`; 
-} else if (especieLowerCase === 'gato') {
-    imageUrl = `https://cataas.com/cat?width=300&height=200&v=${pet.id}`; 
-} else {
+  let imageUrl;
+
+  if (especieLowerCase === 'cachorro') {
+    imageUrl = `https://placedog.net/300/200?random=${pet.id}`;
+  } else if (especieLowerCase === 'gato') {
+    imageUrl = `https://cataas.com/cat?width=300&height=200&v=${pet.id}`;
+  } else {
     imageUrl = `https://via.placeholder.com/300x200?text=${pet.nome}`;
-}
+  }
+
   const idade = calcularIdade(pet.dataNascimento);
-  const idadeTexto = idade === 1 ? 'ano' : 'anos'; 
+  const idadeTexto = idade === 1 ? 'ano' : 'anos';
+
+  const detalhesLink = `/app/pets/${pet.id}`;
 
   return (
-    <div className="pet-card">
-      <div className="pet-card-image-container">
-        <img src={imageUrl} alt={`Foto do ${pet.nome}`} className="pet-card-image" />
+    <div className='pet-card'>
+      <div className='pet-card-image-container'>
+        <img
+          src={imageUrl}
+          alt={`Foto do ${pet.nome}`}
+          className='pet-card-image'
+        />
       </div>
 
-      <div className="pet-card-content">
-        <h3 className="pet-card-name">{pet.nome}</h3>
-        <p className="pet-card-detail">
-            <span className="detail-label">Espécie:</span> {pet.especie}
+      <div className='pet-card-content'>
+        <h3 className='pet-card-name'>{pet.nome}</h3>
+        <p className='pet-card-detail'>
+          <span className='detail-label'>Espécie:</span> {pet.especie}
         </p>
-        <p className="pet-card-detail">
-            <span className="detail-label">Idade:</span> {idade} {idadeTexto}
+        <p className='pet-card-detail'>
+          <span className='detail-label'>Idade:</span> {idade} {idadeTexto}
         </p>
-        
-        <Link to={`/pets/${pet.id}`} className="details-button">
-          Ver Detalhes
-        </Link>
+
+        <p className='pet-card-description'>
+          <span className='detail-label'>Descrição: </span>
+          {limitarDescricao(pet.descricao)}
+        </p>
+
+        {isLoggedIn && (
+          <Link to={detalhesLink} className='details-button'>
+            Ver Detalhes
+          </Link>
+        )}
       </div>
     </div>
   );

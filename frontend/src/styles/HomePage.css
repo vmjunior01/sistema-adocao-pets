@@ -1,22 +1,54 @@
-/* frontend/src/styles/HomePage.css */
-
 .homepage-container {
-    padding: calc(4 * var(--spacing-unit)); /* 32px de padding */
-    max-width: 1200px; /* Limita a largura do conteúdo */
-    margin: 0 auto; /* Centraliza o contêiner */
+  padding: 32px;
+  max-width: 1200px;
+  margin: 0 auto;
 }
 
 .homepage-container h2 {
-    color: var(--color-primary);
-    margin-bottom: calc(4 * var(--spacing-unit));
-    text-align: center;
+  color: var(--color-text);
+  margin-bottom: 32px;
+  text-align: center;
 }
 
 .pets-grid {
-    display: grid;
-    /* Cria um layout responsivo: 
-       mínimo de 300px por coluna, e quantas couberem */
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: calc(3 * var(--spacing-unit)); /* Espaçamento de 24px entre os cartões */
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 30px;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.filters-container {
+  background-color: var(--color-light);
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  align-items: center;
+  margin: 20px auto 30px auto;
+  max-width: 700px;
+  padding: 10px;
+  border-radius: 10px;
+  flex-wrap: wrap;
+}
+
+.filters-container label {
+  font-weight: bold;
+  font-size: 0.9rem;
+  color: var(--color-text)
+}
+
+.filters-container select {
+  padding: 8px 12px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.8rem;
+}
+
+.error-msg {
+  color: var(--color-text);
+  font-size: 1rem;
+  font-weight: bold;
+
 }

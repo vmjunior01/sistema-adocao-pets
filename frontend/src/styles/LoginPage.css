@@ -1,12 +1,9 @@
-/* src/styles/LoginPage.css */
 
 .login-container {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* Usa 100% da altura da viewport */
     min-height: 100vh; 
-    /* var(--color-light) deve estar definido no seu index.css */
     background-color: var(--color-light); 
 }
 
@@ -59,7 +56,6 @@
 }
 
 .login-button {
-    /* Aproveita o estilo do cta-button.primary que você já tem */
     width: 100%;
     margin-top: 15px;
 }

@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   FaInstagram,
   FaFacebook,
@@ -30,7 +31,7 @@ export default function HeaderLanding() {
         </a>
         <a
           className='button-link'
-          href='https://api.whatsapp.com/send?phone=5511912345678&text=ola,%20estou%20interessado(a)%20em%20adotar%20(digite%20o%20nome%20ou%20ID%20do%20pet%20):'
+          href='https://api.whatsapp.com/send?phone=5511912345678&text=ola,%20estou%20interessado(a)%20em%20adotar%20(envie%20o%20nome%20do%20pet)%20:'
           target='_blank'
           rel='noopener noreferrer'
         >

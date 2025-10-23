@@ -58,12 +58,21 @@
         padding: 15px 15px; 
     }
 
+    nav.header-nav {
+        gap: 20px;
+    }
+
     .header-logo {
-        margin-bottom: 10px; /* Dá espaço acima da nav */
+        margin-bottom: 10px;
         text-align: center; 
     }
 
     .button-link {
         padding: 8px 16px;
+    }
+
+    .cta-button.secondary {
+        display: flex;
+        justify-content: center;
     }
 }

@@ -1,5 +1,3 @@
-// frontend/src/pages/CadastroAdotantePage.jsx
-
 import React, { useState } from 'react';
 import axios from 'axios';
 import FormContainer from '../components/FormContainer';

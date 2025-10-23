@@ -1,7 +1,6 @@
-/* frontend/src/styles/PetDetail.css */
 
 .detail-container {
-    padding: calc(6 * var(--spacing-unit)) calc(4 * var(--spacing-unit)); /* Padding maior */
+    padding: calc(6 * var(--spacing-unit)) calc(4 * var(--spacing-unit));
     max-width: 1000px;
     margin: 0 auto;
 }
@@ -23,7 +22,7 @@
 }
 
 .detail-image-box {
-    flex: 1; /* Ocupa metade do espaço */
+    flex: 1;
     max-width: 50%;
     overflow: hidden;
 }
@@ -35,7 +34,7 @@
 }
 
 .detail-info-box {
-    flex: 1; /* Ocupa a outra metade */
+    flex: 1;
     padding: 30px;
 }
 
@@ -57,10 +56,9 @@
     margin-bottom: 30px;
 }
 
-/* Estilo para o Form Container dentro da página de detalhes */
 .detail-info-box .form-container {
     padding: 20px;
-    box-shadow: none; /* Remove a sombra do container interno */
+    box-shadow: none;
     border: 1px solid #eee;
 }
 

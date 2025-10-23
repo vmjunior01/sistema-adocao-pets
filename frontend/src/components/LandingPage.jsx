@@ -1,3 +1,4 @@
+import React from 'react';
 import '../styles/LandingPage.css';
 
 import HeroBg from '../assets/hero-bg.jpg';
@@ -99,7 +100,7 @@ export default function LandingPage() {
             </span>
           </div>
 
-          <Link to='/pets' className='cta-button secondary'>
+          <Link to='/public' className='cta-button secondary'>
             Ver animais disponíveis
           </Link>
         </div>

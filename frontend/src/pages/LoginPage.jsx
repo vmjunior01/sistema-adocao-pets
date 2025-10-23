@@ -13,7 +13,7 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (isLoggedIn) {
-      navigate('/pets', { replace: true });
+      navigate('/app/pets', { replace: true });
     }
   }, [isLoggedIn, navigate]);
 
@@ -24,8 +24,7 @@ export default function LoginPage() {
     const success = await login(email, senha);
 
     if (success) {
-      navigate('/pets');
-
+      navigate('/app/pets');
     } else {
       setError('E-mail ou senha incorretos. Verifique suas credenciais.');
     }
@@ -34,8 +33,8 @@ export default function LoginPage() {
   return (
     <div className='login-container'>
       <div className='login-box'>
-        <h2>Login Interno Adopet</h2>
-        <p>Acesso exclusivo para funcionários do abrigo.</p>
+        <h2>Login Interno - Adopet</h2>
+        <p>Acesso exclusivo para funcionários.</p>
 
         <form onSubmit={handleSubmit}>
           {error && <p className='error-message'>{error}</p>}
@@ -45,7 +44,7 @@ export default function LoginPage() {
             <input
               id='email'
               type='email'
-              placeholder='seu.email@abrigo.com'
+              placeholder='seuemail@abrigo.com'
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
