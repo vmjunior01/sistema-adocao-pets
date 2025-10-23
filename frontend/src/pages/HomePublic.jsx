@@ -1,5 +1,3 @@
-// src/pages/HomePublic.jsx (COMPLETO COM FILTROS)
-
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 
@@ -25,7 +23,7 @@ const getAgeCategory = (dataNascimento) => {
   return 'Idoso';
 };
 
-export default function HomePublic() { 
+export default function HomePublic() {
   const [pets, setPets] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -103,8 +101,10 @@ export default function HomePublic() {
           </select>
         </div>
 
-        {filteredPets.length === 0 ? ( // ⬅️ Usando filteredPets
-          <p>Nenhum pet encontrado com os filtros selecionados.</p>
+        {filteredPets.length === 0 ? (
+          <p className='error-msg'>
+            Nenhum pet encontrado com os filtros selecionados.
+          </p>
         ) : (
           <div className='pets-grid'>
             {filteredPets.map((pet) => (
@@ -117,11 +117,12 @@ export default function HomePublic() {
   };
 
   return (
-    <>
+    <div className='layout-flex-container'>
       <HeaderLanding />
-      <main>{renderContent()}</main>
+      <main className='content-grow'>
+        {renderContent()}
+      </main>
       <Footer />
-    </>
+    </div>
   );
-};
-
+}

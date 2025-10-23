@@ -99,7 +99,9 @@ const HomePage = () => {
         </select>
       </div>
       {filteredPets.length === 0 ? (
-        <p>Nenhum pet encontrado com os filtros selecionados.</p>
+        <p className='error-msg'>
+          Nenhum pet encontrado com os filtros selecionados.
+        </p>
       ) : (
         <div className='pets-grid'>
           {filteredPets.map((pet) => (
