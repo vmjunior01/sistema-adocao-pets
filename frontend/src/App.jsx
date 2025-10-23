@@ -1,20 +1,24 @@
-// frontend/src/App.jsx
-
-import React from 'react';
+import { useLocation, Outlet } from 'react-router-dom';
 import Header from './components/Header';
-// Importamos o Outlet para renderizar o componente da rota ativa
-import { Outlet } from 'react-router-dom';
+import HeaderLanding from './components/HeaderLanding';
+import Footer from './components/Footer';
 
-function App() {
+export default function App() {
+  const location = useLocation();
+
+  const isHomePage = location.pathname === '/';
+
+  const CurrentHeader = isHomePage ? HeaderLanding : Header;
+
   return (
-    <>
-      <Header />
-      <main className="main-content">
-        {/* O Outlet renderizará a HomePage, CadastroPetPage, etc. aqui */}
-        <Outlet /> 
+    <div className='app-container'>
+      <CurrentHeader />
+
+      <main className='main-content'>
+        <Outlet />
       </main>
-    </>
+
+      <Footer />
+    </div>
   );
 }
-
-export default App;

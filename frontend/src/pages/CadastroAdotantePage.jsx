@@ -18,18 +18,19 @@ const CadastroAdotantePage = () => {
   const [statusMessage, setStatusMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
-
+  
   // 2. Função para atualizar o estado ao digitar
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
+  
   // 3. Função de Submissão
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatusMessage('');
     setIsSuccess(false);
-
+    
+    
     try {
       // Chamada POST para a API (Backend) - Rota /adotantes
       await axios.post(`${API_URL}/adotantes`, formData);
@@ -41,7 +42,7 @@ const CadastroAdotantePage = () => {
       setTimeout(() => {
         navigate('/');
       }, 2000);
-
+      
     } catch (error) {
       console.error('Erro ao cadastrar adotante:', error);
       // Tratamento de erro específico para email duplicado (P2002)
@@ -50,7 +51,7 @@ const CadastroAdotantePage = () => {
       setIsSuccess(false);
     }
   };
-
+  
   return (
     <FormContainer title="Cadastrar Adotante">
       <form onSubmit={handleSubmit}>
