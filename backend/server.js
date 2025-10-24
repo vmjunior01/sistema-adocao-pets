@@ -364,40 +364,6 @@ app.delete('/adotantes/:id', async (req, res) => {
   }
 });
 
-app.get('/pets/:id', async (req, res) => {
-  try {
-    const petId = parseInt(req.params.id);
-
-    const pet = await prisma.pet.findUnique({
-      where: { id: petId },
-      include: {
-        adocao: {
-          select: {
-            id: true,
-            adotante: {
-              select: {
-                id: true,
-                nomeCompleto: true,
-              },
-            },
-          },
-        },
-      },
-    });
-
-    if (!pet) {
-      return res.status(404).json({ error: 'Pet não encontrado.' });
-    }
-
-    res.json(pet);
-  } catch (error) {
-    console.error(error);
-    res
-      .status(500)
-      .json({ error: 'Não foi possível buscar os detalhes do Pet.' });
-  }
-});
-
 app.post('/funcionarios', async (req, res) => {
   try {
     const { nomeCompleto, email, senhaHash } = req.body;
