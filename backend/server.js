@@ -398,6 +398,35 @@ app.get('/pets/:id', async (req, res) => {
   }
 });
 
+// Rota para cadastrar um novo Funcionário (Create)
+app.post('/funcionarios', async (req, res) => {
+  try {
+    const { nomeCompleto, email, senhaHash } = req.body;
+
+    // Cria novo funcionário na tabela `usuario`
+    const novoFuncionario = await prisma.usuario.create({
+      data: {
+        nomeCompleto,
+        email,
+        senhaHash,
+        role: 'Funcionario', // Define papel fixo
+      },
+    });
+
+    res.status(201).json(novoFuncionario);
+  } catch (error) {
+    if (error.code === 'P2002') {
+      return res
+        .status(409)
+        .json({ error: 'O e-mail informado já está cadastrado.' });
+    }
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: 'Não foi possível cadastrar o Funcionário.' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });

@@ -13,6 +13,7 @@ import CadastroPetPage from './pages/CadastroPetPage.jsx';
 import CadastroAdotantePage from './pages/CadastroAdotantePage.jsx';
 import PetDetailPage from './pages/PetDetailPage.jsx';
 import AdopterListPage from './pages/AdopterListPage.jsx';
+import CadastroFuncionarioPage from './pages/CadastroFuncionarioPage.jsx';
 
 import App from './App.jsx';
 
@@ -26,7 +27,8 @@ ReactDOM.createRoot(document.getElementById('root')).render(
             <Route path='/' element={<LandingPage />} />
             <Route path='/login' element={<LoginPage />} />
             <Route path='/pets' element={<HomePage />} />
-            <Route path='/cadastro' element={<CadastroAdotantePage />} />
+            <Route path='/cadastro/adotante' element={<CadastroAdotantePage />} />
+            <Route path='/cadastro/funcionario' element={<CadastroFuncionarioPage />} />
             <Route path='pets/:id' element={<PetDetailPage />} />
             <Route path='*' element={<Navigate to='/' replace />} />
           </Route>

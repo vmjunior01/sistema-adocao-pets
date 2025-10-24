@@ -25,6 +25,7 @@
 
 .login-box p {
   color: var(--color-text);
+  font-size: 14px;
 }
 
 .error-message {
