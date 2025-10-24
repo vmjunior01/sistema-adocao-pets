@@ -1,13 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext';
 import '../styles/PetCard.css';
-
-const limitarDescricao = (descricao, limite = 100) => {
-  if (!descricao) return 'Sem descrição.';
-  if (descricao.length <= limite) return descricao;
-  return descricao.substring(0, limite) + '...';
-};
 
 const calcularIdade = (dataNascimento) => {
   const hoje = new Date();
@@ -22,8 +15,6 @@ const calcularIdade = (dataNascimento) => {
 };
 
 const PetCard = ({ pet }) => {
-  const { isLoggedIn } = useAuth();
-
   const especieLowerCase = pet.especie ? pet.especie.toLowerCase() : '';
 
   let imageUrl;
@@ -39,7 +30,10 @@ const PetCard = ({ pet }) => {
   const idade = calcularIdade(pet.dataNascimento);
   const idadeTexto = idade === 1 ? 'ano' : 'anos';
 
-  const detalhesLink = `/app/pets/${pet.id}`;
+  const detalhesLink = `/pets/${pet.id}`;
+
+  const statusClass =
+    pet.status === 'adotado' ? 'status-adotado' : 'status-disponivel';
 
   return (
     <div className='pet-card'>
@@ -53,6 +47,7 @@ const PetCard = ({ pet }) => {
 
       <div className='pet-card-content'>
         <h3 className='pet-card-name'>{pet.nome}</h3>
+
         <p className='pet-card-detail'>
           <span className='detail-label'>Espécie:</span> {pet.especie}
         </p>
@@ -60,16 +55,13 @@ const PetCard = ({ pet }) => {
           <span className='detail-label'>Idade:</span> {idade} {idadeTexto}
         </p>
 
-        <p className='pet-card-description'>
-          <span className='detail-label'>Descrição: </span>
-          {limitarDescricao(pet.descricao)}
+        <p className={`pet-card-status ${statusClass}`}>
+          <span className='detail-label'></span>{pet.status.toUpperCase()}
         </p>
 
-        {isLoggedIn && (
-          <Link to={detalhesLink} className='details-button'>
-            Ver Detalhes
-          </Link>
-        )}
+        <Link to={detalhesLink} className='details-button'>
+          Ver Detalhes
+        </Link>
       </div>
     </div>
   );

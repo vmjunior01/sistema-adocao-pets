@@ -5,14 +5,10 @@ import HeroBg from '../assets/hero-bg.jpg';
 import CheckIcon from '../assets/check.png';
 import PetsGrid from '../assets/pets-grid.jpg';
 import { Link } from 'react-router-dom';
-import HeaderLanding from './HeaderLanding';
-import Footer from './Footer';
 
 export default function LandingPage() {
   return (
     <div className='adopet-landing'>
-      <HeaderLanding />
-
       <section
         className='hero-section'
         style={{ backgroundImage: `url(${HeroBg})` }}
@@ -36,7 +32,7 @@ export default function LandingPage() {
             <img src={CheckIcon} alt='Ícone de Visto' className='check-icon' />
             <h3>Processo descomplicado</h3>
             <p>
-              Suporte completo e humanizado para garantir uma adoção tranquila,
+              Suporte completo e plataforma simples para uma adoção tranquila,
               do início ao fim.
             </p>
           </div>
@@ -73,10 +69,9 @@ export default function LandingPage() {
           <div className='step'>
             <span className='step-number'>1</span>
             <span className='step-text'>
-              <h3>Pesquise e Encontre</h3>
+              <h3>Cadastre-se e pesquise</h3>
               <p>
-                Use nossos filtros para visualizar cães e gatos disponíveis
-                próximos a você.
+                Use nossos filtros para visualizar cães e gatos disponíveis.
               </p>
             </span>
           </div>
@@ -84,8 +79,11 @@ export default function LandingPage() {
           <div className='step'>
             <span className='step-number'>2</span>
             <span className='step-text'>
-              <h3>Entre em contato com a gente</h3>
-              <p>Converse com nossos colaboradores.</p>
+              <h3>Escolha seu pet</h3>
+              <p>
+                Leia a descrição de cada animal e escolha o que mais combina com
+                a sua rotina diária.
+              </p>
             </span>
           </div>
 
@@ -100,13 +98,11 @@ export default function LandingPage() {
             </span>
           </div>
 
-          <Link to='/public' className='cta-button secondary'>
+          <Link to='/pets' className='cta-button secondary'>
             Ver animais disponíveis
           </Link>
         </div>
       </section>
-
-      <Footer />
     </div>
   );
 }

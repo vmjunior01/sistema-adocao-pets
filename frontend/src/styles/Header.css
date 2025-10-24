@@ -12,57 +12,86 @@ header.main-header {
   font-size: 1rem;
   color: var(--color-text);
 }
-  
-.header-logo {
-  height: 50px;
-}
-  
-.header-nav {
-  display: flex;
-  gap: 24px;
-}
 
-.nav-link {
-  color: var(--color-text);
-  text-decoration: none ;
+a.button-login {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
   font-size: 1rem;
-  padding: var(--spacing-unit) 0;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
 }
 
-.nav-link:hover {
-    color: var(--color-primary);
+a.button-login:hover {
+  background-color: var(--color-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }
 
-button {
-  background-color: transparent;
+button.button-login {
+  background-color: var(--color-secondary);
+  color: #ffffff;
+  padding: 10px;
+  min-width: 100px;
+  border-radius: 30px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
   border: none;
   cursor: pointer;
 }
 
+button.button-login:hover {
+  background-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.link-text {
+  color: var(--color-text);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.link-text:hover {
+  color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.header-logo {
+  height: 50px;
+}
+
+div.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
 @media (max-width: 720px) {
-    header.main-header { 
-        flex: wrap;
-        justify-content: center;
-        height: 120px;
-        align-items: center; 
-        padding: 15px 15px; 
-    }
+  .logout-user {
+    position: fixed;
+    top: 64px;
+    right: 20px;
+  }
 
-    nav.header-nav {
-      gap: 10px;
-    }
+  header.main-header {
+    height: 100px;
+    display: grid;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 10px;
+  }
 
-    a.nav-link {
-      font-size: 1rem;
-    }
-
-    .header-logo {
-        margin-bottom: 10px;
-        text-align: center; 
-    }
-
-    .button-link {
-        padding: 8px 16px;
-    }
+  .login-adopter {
+    position: fixed;
+    top: 54px;
+    right: 20px;
+  }
 }

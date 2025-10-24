@@ -8,32 +8,37 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 import LandingPage from './components/LandingPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
-import HomePublic from './pages/HomePublic.jsx';
+// import HomePublic from './pages/HomePublic.jsx';
 import HomePage from './pages/HomePage.jsx';
 import CadastroPetPage from './pages/CadastroPetPage.jsx';
 import CadastroAdotantePage from './pages/CadastroAdotantePage.jsx';
 import PetDetailPage from './pages/PetDetailPage.jsx';
+import AdopterListPage from './pages/AdopterListPage.jsx';
+
+import App from './App.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
     <BrowserRouter>
       <AuthProvider>
         <Routes>
-          <Route path='/' element={<LandingPage />} />
-          <Route path='/login' element={<LoginPage />} />
-          <Route path='/public' element={<HomePublic />} />
+          <Route element={<App />}>
+            {' '}
+            <Route path='/' element={<LandingPage />} />
+            <Route path='/login' element={<LoginPage />} />
+            <Route path='/pets' element={<HomePage />} />
+            <Route path='/cadastro' element={<CadastroAdotantePage />} />
+            <Route path='pets/:id' element={<PetDetailPage />} />
+            <Route path='*' element={<Navigate to='/' replace />} />
+          </Route>
 
           <Route path='/app' element={<ProtectedRoute />}>
-            <Route path='pets' element={<HomePage />} />
-            <Route path='pets/:id' element={<PetDetailPage />} />
-
-            <Route path='cadastro/pet' element={<CadastroPetPage />} />
-            <Route path='cadastro/adotante' element={<CadastroAdotantePage />} />
+            <Route path='cadastropet' element={<CadastroPetPage />} />
+            <Route path='adotantes' element={<AdopterListPage />} />
+            <Route path='cadastropet/:idPet' element={<CadastroPetPage />} />
 
             <Route index element={<Navigate to='pets' replace />} />
           </Route>
-
-          <Route path='*' element={<Navigate to='/' replace />} />
         </Routes>
       </AuthProvider>
     </BrowserRouter>

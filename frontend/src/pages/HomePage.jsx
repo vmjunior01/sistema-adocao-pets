@@ -2,7 +2,6 @@ import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import PetCard from '../components/PetCard';
 import '../styles/HomePage.css';
-
 const API_URL = 'http://localhost:3000';
 
 const getAgeCategory = (dataNascimento) => {
@@ -27,17 +26,15 @@ const HomePage = () => {
 
   const [speciesFilter, setSpeciesFilter] = useState('Todos');
   const [ageFilter, setAgeFilter] = useState('Todos');
+  const [statusFilter, setStatusFilter] = useState('disponível');
 
   useEffect(() => {
     const fetchPets = async () => {
       try {
-        const response = await axios.get(`${API_URL}/pets`);
+        const response = await axios.get(`${API_URL}/pets?status=todos`);
         setPets(response.data);
       } catch (err) {
-        console.error('Erro ao buscar pets:', err);
-        setError(
-          'Não foi possível carregar a lista de pets. O servidor pode estar offline.'
-        );
+        // ...
       } finally {
         setLoading(false);
       }
@@ -48,11 +45,17 @@ const HomePage = () => {
   const filteredPets = useMemo(() => {
     let currentPets = pets;
 
-    if (speciesFilter !== 'Todos') {
+    if (statusFilter !== 'Todos') {
+      const lowerFilter = statusFilter.toLowerCase();
       currentPets = currentPets.filter(
-        (pet) =>
-          pet.especie &&
-          pet.especie.toLowerCase() === speciesFilter.toLowerCase()
+        (pet) => pet.status && pet.status.toLowerCase() === lowerFilter
+      );
+    }
+
+    if (speciesFilter !== 'Todos') {
+      const lowerFilter = speciesFilter.toLowerCase();
+      currentPets = currentPets.filter(
+        (pet) => pet.especie && pet.especie.toLowerCase() === lowerFilter
       );
     }
 
@@ -63,7 +66,7 @@ const HomePage = () => {
     }
 
     return currentPets;
-  }, [pets, speciesFilter, ageFilter]);
+  }, [pets, statusFilter, speciesFilter, ageFilter]);
 
   if (loading) {
     return <h1>Carregando Pets...</h1>;
@@ -75,29 +78,45 @@ const HomePage = () => {
 
   return (
     <div className='homepage-container'>
-      <h2>Gerenciamento de Pets Disponíveis</h2>
-      <div className='filters-container'>
-        <label>Filtrar por Espécie:</label>
-        <select
-          value={speciesFilter}
-          onChange={(e) => setSpeciesFilter(e.target.value)}
-        >
-          <option value='Todos'>Todas as Espécies</option>
-          <option value='Cachorro'>Cachorros</option>
-          <option value='Gato'>Gatos</option>
-        </select>
+      <h2>Gerenciamento de Pets</h2>
 
-        <label>Filtrar por Idade:</label>
-        <select
-          value={ageFilter}
-          onChange={(e) => setAgeFilter(e.target.value)}
-        >
-          <option value='Todos'>Todas as Idades</option>
-          <option value='Filhote'>Filhote (até 1 ano)</option>
-          <option value='Adulto'>Adulto (2 a 7 anos)</option>
-          <option value='Idoso'>Idoso (8+ anos)</option>
-        </select>
+      <div className='filters-container'>
+        <div>
+          <label>Status:</label>
+          <select
+            value={statusFilter}
+            onChange={(e) => setStatusFilter(e.target.value)}
+          >
+            <option value='Todos'>Todos</option>
+            <option value='disponível'>Disponível</option>
+            <option value='adotado'>Adotado</option>
+          </select>
+        </div>
+        <div>
+          <label>Espécie:</label>
+          <select
+            value={speciesFilter}
+            onChange={(e) => setSpeciesFilter(e.target.value)}
+          >
+            <option value='Todos'>Todas as Espécies</option>
+            <option value='Cachorro'>Cachorros</option>
+            <option value='Gato'>Gatos</option>
+          </select>
+        </div>
+        <div>
+          <label>Idade:</label>
+          <select
+            value={ageFilter}
+            onChange={(e) => setAgeFilter(e.target.value)}
+          >
+            <option value='Todos'>Todas as Idades</option>
+            <option value='Filhote'>Filhote</option>
+            <option value='Adulto'>Adulto</option>
+            <option value='Idoso'>Idoso</option>
+          </select>
+        </div>
       </div>
+
       {filteredPets.length === 0 ? (
         <p className='error-msg'>
           Nenhum pet encontrado com os filtros selecionados.

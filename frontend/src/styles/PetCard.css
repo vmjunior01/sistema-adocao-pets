@@ -57,11 +57,21 @@
 }
 
 .details-button:hover {
-  background-color: #50204A;
+  background-color: var(--color-secondary);
 }
 
-.pet-card-description {
-  font-size: 0.85rem;
-  height: 3.5rem; 
-  overflow: hidden;
+.status-disponivel {
+    color: #1daa3e; 
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+    font-size: 0.9rem;
+  }
+
+.status-adotado {
+    color: #e62a2a; 
+    display: flex;
+    justify-content: flex-end;
+    font-weight: bold;
+    font-size: 0.9rem; 
 }

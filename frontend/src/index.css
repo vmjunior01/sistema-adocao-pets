@@ -1,13 +1,26 @@
 :root {
   --color-primary: #38a3a5;
-  --color-secondary: #57cc99;
+  --color-secondary: #295f60;
   --color-background: #f8f9fa;
   --color-text: #131313;
   --color-adopted: #ff6b6b;
   --color-zero: #ffffff;
+  --color-light: #dbecec;
 
   --font-family-sans: 'Roboto', sans-serif;
   --spacing-unit: 8px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-background: #121212;
+    --color-zero: #1f1f1f;
+    --color-light: #2c2c2c;
+
+    --color-text: #e0e0e0;
+    --color-text-light: #b0b0b0;
+    --color-primary: #a3569c;
+  }
 }
 
 * {
