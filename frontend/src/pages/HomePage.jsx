@@ -34,7 +34,6 @@ const HomePage = () => {
         const response = await axios.get(`${API_URL}/pets?status=todos`);
         setPets(response.data);
       } catch (err) {
-        // ...
       } finally {
         setLoading(false);
       }

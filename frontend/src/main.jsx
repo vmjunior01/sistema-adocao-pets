@@ -8,7 +8,6 @@ import ProtectedRoute from './components/ProtectedRoute.jsx';
 
 import LandingPage from './components/LandingPage.jsx';
 import LoginPage from './pages/LoginPage.jsx';
-// import HomePublic from './pages/HomePublic.jsx';
 import HomePage from './pages/HomePage.jsx';
 import CadastroPetPage from './pages/CadastroPetPage.jsx';
 import CadastroAdotantePage from './pages/CadastroAdotantePage.jsx';
