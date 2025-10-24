@@ -5,12 +5,10 @@ import { useNavigate } from 'react-router-dom';
 
 const API_URL = 'http://localhost:3000';
 
-const CadastroAdotantePage = () => {
+export default function CadastroFuncionarioPage() {
   const [formData, setFormData] = useState({
     nomeCompleto: '',
     email: '',
-    telefone: '',
-    endereco: '',
     senhaHash: '',
   });
   const [statusMessage, setStatusMessage] = useState('');
@@ -27,10 +25,10 @@ const CadastroAdotantePage = () => {
     setIsSuccess(false);
 
     try {
-      await axios.post(`${API_URL}/adotantes`, formData);
+      await axios.post(`${API_URL}/funcionarios`, formData);
 
       setStatusMessage(
-        'Cadastro realizado com sucesso! Redirecionando para o Login...'
+        'Funcionário cadastrado com sucesso! Redirecionando para o Login...'
       );
       setIsSuccess(true);
 
@@ -38,18 +36,18 @@ const CadastroAdotantePage = () => {
         navigate('/login');
       }, 2000);
     } catch (error) {
-      console.error('Erro ao cadastrar adotante:', error);
+      console.error('Erro ao cadastrar funcionário:', error);
 
       const errorMsg =
         error.response?.data?.error ||
-        'Erro ao cadastrar o Adotante. Verifique os dados.';
+        'Erro ao cadastrar o Funcionário. Verifique os dados.';
       setStatusMessage(errorMsg);
       setIsSuccess(false);
     }
   };
 
   return (
-    <FormContainer title='Cadastrar Adotante'>
+    <FormContainer title='Cadastrar Novo Funcionário'>
       <form onSubmit={handleSubmit}>
         <div className='form-group'>
           <label htmlFor='nomeCompleto'>Nome Completo</label>
@@ -87,32 +85,8 @@ const CadastroAdotantePage = () => {
           />
         </div>
 
-        <div className='form-group'>
-          <label htmlFor='telefone'>Telefone</label>
-          <input
-            type='tel'
-            id='telefone'
-            name='telefone'
-            value={formData.telefone}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
-        <div className='form-group'>
-          <label htmlFor='endereco'>Endereço</label>
-          <input
-            type='text'
-            id='endereco'
-            name='endereco'
-            value={formData.endereco}
-            onChange={handleChange}
-            required
-          />
-        </div>
-
         <button type='submit' className='form-button'>
-          Cadastrar Adotante
+          Cadastrar Funcionário
         </button>
 
         {statusMessage && (
@@ -123,6 +97,4 @@ const CadastroAdotantePage = () => {
       </form>
     </FormContainer>
   );
-};
-
-export default CadastroAdotantePage;
+}

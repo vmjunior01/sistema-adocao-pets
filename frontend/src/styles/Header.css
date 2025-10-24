@@ -1,35 +1,98 @@
-.main-header {
-    height: 80px;
-    background-color: var(--color-zero);
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    padding: 0px 32px;
-    display: flex;
-    justify-content: space-between;
+header.main-header {
+  height: 80px;
+  background-color: var(--color-zero);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 0px 32px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  font-size: 1rem;
+  color: var(--color-text);
+}
+
+a.button-login {
+  background-color: var(--color-primary);
+  color: #ffffff;
+  padding: 10px 20px;
+  border-radius: 30px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+a.button-login:hover {
+  background-color: var(--color-secondary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+button.button-login {
+  background-color: var(--color-secondary);
+  color: #ffffff;
+  padding: 10px;
+  min-width: 100px;
+  border-radius: 30px;
+  text-align: center;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+}
+
+button.button-login:hover {
+  background-color: var(--color-primary);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+.link-text {
+  color: var(--color-text);
+  text-decoration: none;
+  transition: all 0.3s ease;
+  font-weight: bold;
+}
+
+.link-text:hover {
+  color: var(--color-primary);
+  transform: translateY(-2px);
+}
+
+.header-logo {
+  padding-top: 10px;
+  height: 50px;
+}
+
+div.header-nav {
+  display: flex;
+  align-items: center;
+  gap: 24px;
+}
+
+@media (max-width: 720px) {
+  .logout-user {
+    position: fixed;
+    top: 64px;
+    right: 20px;
+  }
+
+  header.main-header {
+    height: 100px;
+    display: grid;
     align-items: center;
-    position: sticky;
-    top: 0;
-    z-index: 1000;
-    font-size: 1rem;
-    color: var(--color-text);
+    justify-content: space-between;
+    padding-bottom: 10px;
   }
-  
-  .header-logo {
-    height: 50px;
+
+  .login-adopter {
+    position: fixed;
+    top: 54px;
+    right: 20px;
   }
-  
-.header-nav {
-    display: flex;
-    gap: 24px;
-}
-
-.nav-link {
-    color: var(--color-text);
-    text-decoration: none;
-    font-size: 1rem;
-    padding: var(--spacing-unit) 0;
-    transition: color 0.3s ease;
-}
-
-.nav-link:hover {
-    color: var(--color-primary);
 }

@@ -1,20 +1,14 @@
-import { useLocation, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 import Header from './components/Header';
-import HeaderLanding from './components/HeaderLanding';
 import Footer from './components/Footer';
+import './App.css';
 
 export default function App() {
-  const location = useLocation();
-
-  const isHomePage = location.pathname === '/';
-
-  const CurrentHeader = isHomePage ? HeaderLanding : Header;
-
   return (
-    <div className='app-container'>
-      <CurrentHeader />
+    <div className='layout-flex-container'>
+      <Header />
 
-      <main className='main-content'>
+      <main className='content-grow'>
         <Outlet />
       </main>
 

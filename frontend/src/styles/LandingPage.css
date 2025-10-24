@@ -1,7 +1,3 @@
-:root {
-  --color-light: #e5f5f7;
-}
-
 .adopet-landing {
   color: var(--color-text);
   background-color: var(--color-background);
@@ -65,7 +61,7 @@
 }
 
 .cta-button.primary:hover {
-  background-color: #501f4b; /* Tom mais escuro */
+  background-color: var(--color-secondary);
   transform: translateY(-2px);
 }
 
@@ -126,8 +122,9 @@
   gap: 50px;
   padding: 100px 40px;
   max-width: 1200px;
-  margin: 0px auto 50px;
+  margin: 0px auto;
   border-radius: 10px;
+  margin-bottom: 50px;
 
 }
 
@@ -162,8 +159,7 @@
 
 .step-text h3 {
   margin-top: 0;
-  font-
-  size: 1.4rem;
+  font-size: 1.4rem;
 }
 
 .step-text p {
@@ -177,7 +173,7 @@
 }
 
 .cta-button.secondary:hover {
-  background-color: #501f4b;
+  background-color: var(--color-secondary);
   transform: translateY(-2px);
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
 }

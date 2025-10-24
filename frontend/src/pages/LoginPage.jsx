@@ -1,31 +1,31 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import { useAuth } from '../contexts/AuthContext'; // ⬅️ Hook de autenticação
+import { useAuth } from '../contexts/AuthContext';
 import '../styles/LoginPage.css';
 
 export default function LoginPage() {
   const [email, setEmail] = useState('');
   const [senha, setSenha] = useState('');
   const [error, setError] = useState('');
+  const [loginType, setLoginType] = useState('adotante');
 
   const navigate = useNavigate();
-  const { login, isLoggedIn } = useAuth();
-
-  useEffect(() => {
-    if (isLoggedIn) {
-      navigate('/pets', { replace: true });
-    }
-  }, [isLoggedIn, navigate]);
+  const { login, user } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
 
-    const success = await login(email, senha);
+    const success = await login(email, senha, loginType);
 
     if (success) {
-      navigate('/pets');
+      const userRole = JSON.parse(localStorage.getItem('user'))?.role;
 
+      if (userRole === 'Adotante') {
+        navigate('/pets', { replace: true });
+      } else if (userRole === 'Funcionario' || userRole === 'Admin') {
+        navigate('/pets', { replace: true });
+      }
     } else {
       setError('E-mail ou senha incorretos. Verifique suas credenciais.');
     }
@@ -34,18 +34,33 @@ export default function LoginPage() {
   return (
     <div className='login-container'>
       <div className='login-box'>
-        <h2>Login Interno Adopet</h2>
-        <p>Acesso exclusivo para funcionários do abrigo.</p>
-
+        <h2>Login Adopet</h2>
         <form onSubmit={handleSubmit}>
           {error && <p className='error-message'>{error}</p>}
+
+          <div className='input-group login-type-selector'>
+            <label htmlFor='loginType'>Acesso</label>
+            <select
+              id='loginType'
+              value={loginType}
+              onChange={(e) => setLoginType(e.target.value)}
+              className='select-input'
+            >
+              <option value='adotante'>Adotante</option>
+              <option value='funcionario'>Funcionário</option>
+            </select>
+          </div>
 
           <div className='input-group'>
             <label htmlFor='email'>E-mail</label>
             <input
               id='email'
               type='email'
-              placeholder='seu.email@abrigo.com'
+              placeholder={
+                loginType === 'funcionario'
+                  ? 'seuemail@abrigo.com'
+                  : 'seuemail@exemplo.com'
+              }
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
@@ -57,19 +72,31 @@ export default function LoginPage() {
             <input
               id='senha'
               type='password'
-              placeholder='••••••••'
+              placeholder='•••'
               value={senha}
               onChange={(e) => setSenha(e.target.value)}
-              required
             />
           </div>
 
-          <button type='submit' className='cta-button primary login-button'>
+          <button type='submit' className='login-button'>
             Entrar
           </button>
 
+          <div className='register-msg'>
+            <p>Novo por aqui? Cadastre-se! </p>
+            <p>(
+              <Link to='/cadastro/adotante' className='register-link'>
+                Adotante
+              </Link>{' '}
+              ou {' '}
+              <Link to='/cadastro/funcionario' className='register-link'>
+                Funcionário
+              </Link>
+            )</p>
+          </div>
+
           <Link to='/' className='back-link'>
-            ← Voltar para a Landing Page
+            Voltar / Home
           </Link>
         </form>
       </div>

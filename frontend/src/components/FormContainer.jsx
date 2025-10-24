@@ -1,5 +1,4 @@
-// frontend/src/components/FormContainer.jsx
-
+import React from 'react';
 import '../styles/Form.css';
 
 const FormContainer = ({ title, children }) => {

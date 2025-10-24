@@ -1,39 +1,85 @@
-// server.js
-
-// 1. Importa Express e o Prisma Client
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import cors from 'cors';
 
-// 2. Inicializa o Express e o Prisma
 const app = express();
 const prisma = new PrismaClient();
 const PORT = 3000;
 
-// Configuração do CORS: Permite que o Frontend (porta 5173) acesse o Backend
 const corsOptions = {
-    origin: 'http://localhost:5173', // A porta onde o seu React está rodando
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    credentials: true,
-    optionsSuccessStatus: 204
+  origin: 'http://localhost:5173',
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  optionsSuccessStatus: 204,
 };
 
-// 3. Middlewares
-// Aplica o middleware do CORS antes de qualquer rota
-app.use(cors(corsOptions)); // Habilita CORS com opções
+app.use(cors(corsOptions));
 app.use(express.json());
 
+app.post('/auth/login', async (req, res) => {
+  const { email, senha, loginType } = req.body;
+  const emailLimpo = email ? email.trim() : null;
+  const senhaLimpa = senha ? senha.trim() : null;
 
-// 3. Middlewares (para o Express entender JSON)
-app.use(express.json());
+  try {
+    let usuario = null;
+    let tabelaPrisma;
 
-// 4. Sua primeira rota de teste
+    if (loginType === 'funcionario') {
+      tabelaPrisma = prisma.usuario;
+    } else if (loginType === 'adotante') {
+      tabelaPrisma = prisma.adotante;
+    } else {
+      return res
+        .status(400)
+        .json({ error: 'Tipo de login inválido ou não especificado.' });
+    }
+
+    usuario = await tabelaPrisma.findUnique({
+      where: { email: emailLimpo },
+      select: {
+        id: true,
+        nomeCompleto: true,
+        email: true,
+        role: true,
+        senhaHash: true,
+      },
+    });
+
+    if (!usuario) {
+      return res.status(401).json({
+        error: 'E-mail ou senha incorretos. Verifique suas credenciais.',
+      });
+    }
+
+    if (usuario.senhaHash?.trim() !== senhaLimpa) {
+      return res.status(401).json({
+        error: 'E-mail ou senha incorretos. Verifique suas credenciais.',
+      });
+    }
+
+    res.json({
+      token: 'valid-test-token',
+      user: {
+        id: usuario.id,
+        nome: usuario.nomeCompleto || usuario.nome,
+        email: usuario.email,
+        role: usuario.role,
+      },
+    });
+  } catch (error) {
+    console.error('ERRO CRÍTICO NA API (ROTA LOGIN):', error);
+    res.status(500).json({
+      error:
+        'Erro interno no servidor de autenticação. Verifique o console do backend.',
+    });
+  }
+});
+
 app.get('/', (req, res) => {
   res.send('API de Adoção de Pets está rodando!');
 });
 
-
-// Rota para cadastrar um novo Pet (Create)
 app.post('/pets', async (req, res) => {
   try {
     const { nome, especie, dataNascimento, descricao } = req.body;
@@ -41,14 +87,13 @@ app.post('/pets', async (req, res) => {
 
     const novoPet = await prisma.pet.create({
       data: {
-         nome,
-         especie,
-         dataNascimento: dataNascimentoFormatada, // Usa a string ISO formatada
-         descricao,
-        // Status é 'disponível' por padrão (definido no schema.prisma)
+        nome,
+        especie,
+        dataNascimento: dataNascimentoFormatada,
+        descricao,
       },
     });
-    // Retorna o Pet criado com status 201 (Created)
+
     res.status(201).json(novoPet);
   } catch (error) {
     console.error(error);
@@ -56,35 +101,22 @@ app.post('/pets', async (req, res) => {
   }
 });
 
-// Rota para listar Pets, agora com filtros (Read Avançado)
 app.get('/pets', async (req, res) => {
   try {
-    // 1. Recebe os filtros da URL
     const { especie, status } = req.query;
 
-    // 2. Constrói o objeto 'where' para o Prisma
-    let whereClause = {
-      // Começamos com o status 'disponível' por padrão (Requisito)
-      status: 'disponível' 
-    };
-    
-    // Se um status diferente for passado na query, usamos ele.
-    if (status) {
+    let whereClause = {};
+    if (status && status.toLowerCase() !== 'todos') {
       whereClause.status = status;
+    } else if (!status) {
+      whereClause.status = 'disponível';
     }
 
-    // Se uma espécie for passada na query, adicionamos a restrição.
     if (especie) {
-      // Usamos 'contains' para busca flexível, mas para este caso 'equals' é mais seguro.
       whereClause.especie = especie;
     }
-    
-    // *Filtro de Idade (idade é calculada a partir de dataNascimento)*
-    // A lógica de filtragem por 'idade' é mais complexa e é melhor feita no Frontend
-    // ou com cálculos avançados de SQL. Por enquanto, focamos em Espécie e Status.
-    
     const pets = await prisma.pet.findMany({
-      where: whereClause, // Aplica o filtro dinâmico
+      where: whereClause,
       select: {
         id: true,
         nome: true,
@@ -92,20 +124,90 @@ app.get('/pets', async (req, res) => {
         dataNascimento: true,
         descricao: true,
         status: true,
-      }
+        adocao: {
+          select: {
+            adotante: {
+              select: {
+                id: true,
+                nomeCompleto: true,
+              },
+            },
+          },
+        },
+      },
     });
 
     res.json(pets);
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Não foi possível listar os Pets com filtros.' });
+    res
+      .status(500)
+      .json({ error: 'Não foi possível listar os Pets com filtros.' });
   }
 });
 
-// Rota para cadastrar um novo Adotante (Create)
+app.get('/pets/:id', async (req, res) => {
+  try {
+    const petId = parseInt(req.params.id);
+
+    const pet = await prisma.pet.findUnique({
+      where: { id: petId },
+      include: {
+        adocao: {
+          select: {
+            id: true,
+            adotante: {
+              select: {
+                id: true,
+                nomeCompleto: true,
+              },
+            },
+          },
+        },
+      },
+    });
+
+    if (!pet) {
+      return res.status(404).json({ error: 'Pet não encontrado.' });
+    }
+
+    res.json(pet);
+  } catch (error) {
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: 'Não foi possível buscar os detalhes do Pet.' });
+  }
+});
+
+
+app.delete('/pets/:id', async (req, res) => {
+  try {
+    const petId = parseInt(req.params.id);
+
+    const petExistente = await prisma.pet.findUnique({
+      where: { id: petId },
+    });
+
+    if (!petExistente) {
+      return res.status(404).json({ error: 'Pet não encontrado.' });
+    }
+
+    await prisma.pet.delete({
+      where: { id: petId },
+    });
+
+    res.json({ message: `Pet ${petExistente.nome} excluído com sucesso.` });
+  } catch (error) {
+    console.error('Erro ao excluir pet:', error);
+    res.status(500).json({ error: 'Erro ao excluir o pet.' });
+  }
+});
+
+
 app.post('/adotantes', async (req, res) => {
   try {
-    const { nomeCompleto, email, telefone, endereco } = req.body;
+    const { nomeCompleto, email, telefone, endereco, senhaHash } = req.body;
 
     const novoAdotante = await prisma.adotante.create({
       data: {
@@ -113,31 +215,32 @@ app.post('/adotantes', async (req, res) => {
         email,
         telefone,
         endereco,
+        senhaHash,
+        role: 'Adotante',
       },
     });
-    // Retorna o Adotante criado com status 201
     res.status(201).json(novoAdotante);
   } catch (error) {
-    // Se o email já existir (porque definimos como @unique no schema), o Prisma lançará um erro
     if (error.code === 'P2002') {
-      return res.status(409).json({ error: 'O e-mail informado já está cadastrado.' });
+      return res
+        .status(409)
+        .json({ error: 'O e-mail informado já está cadastrado.' });
     }
     console.error(error);
     res.status(500).json({ error: 'Não foi possível cadastrar o Adotante.' });
   }
 });
 
-// Rota para listar todos os Adotantes (Read)
 app.get('/adotantes', async (req, res) => {
   try {
     const adotantes = await prisma.adotante.findMany({
-      // Listamos apenas os campos essenciais
       select: {
         id: true,
         nomeCompleto: true,
         email: true,
         telefone: true,
-      }
+        endereco: true,
+      },
     });
 
     res.json(adotantes);
@@ -147,14 +250,14 @@ app.get('/adotantes', async (req, res) => {
   }
 });
 
-// Rota para registrar uma nova Adoção
 app.post('/adocoes', async (req, res) => {
   try {
     const { petId, adotanteId } = req.body;
 
-    // 1. Verificar se o Pet e o Adotante existem
     const pet = await prisma.pet.findUnique({ where: { id: petId } });
-    const adotante = await prisma.adotante.findUnique({ where: { id: adotanteId } });
+    const adotante = await prisma.adotante.findUnique({
+      where: { id: adotanteId },
+    });
 
     if (!pet) {
       return res.status(404).json({ error: 'Pet não encontrado.' });
@@ -163,50 +266,45 @@ app.post('/adocoes', async (req, res) => {
       return res.status(404).json({ error: 'Adotante não encontrado.' });
     }
 
-    // 2. Verificar se o Pet já está adotado
     if (pet.status === 'adotado') {
       return res.status(409).json({ error: 'Este Pet já foi adotado.' });
     }
 
-    // 3. Registrar a Adoção (Create)
     const novaAdocao = await prisma.adocao.create({
       data: {
         petId: pet.id,
         adotanteId: adotante.id,
-        // dataAdocao é preenchida automaticamente com 'now()'
       },
-      // Incluímos o Pet e o Adotante na resposta para confirmar
       include: {
         pet: true,
         adotante: true,
-      }
+      },
     });
 
-    // 4. Atualizar o status do Pet para "adotado" (Update)
     await prisma.pet.update({
       where: { id: pet.id },
       data: { status: 'adotado' },
     });
 
-    // Retorna a nova Adoção registrada
-    res.status(201).json({ 
+    res.status(201).json({
       mensagem: 'Adoção registrada com sucesso!',
-      adocao: novaAdocao
+      adocao: novaAdocao,
     });
   } catch (error) {
     console.error(error);
-    // Este erro P2002 pode ocorrer se o PetId já tiver sido usado em outra adoção
     if (error.code === 'P2002') {
-      return res.status(409).json({ error: 'Erro de unicidade. Verifique se o Pet já tem um registro de adoção.' });
+      return res.status(409).json({
+        error:
+          'Erro de unicidade. Verifique se o Pet já tem um registro de adoção.',
+      });
     }
     res.status(500).json({ error: 'Erro ao processar a adoção.' });
   }
 });
 
-// Rota para atualizar informações de um Pet (Update)
 app.put('/pets/:id', async (req, res) => {
   try {
-    const petId = parseInt(req.params.id); // Converte o ID da URL para número
+    const petId = parseInt(req.params.id);
     const { nome, especie, dataNascimento, descricao, status } = req.body;
 
     const petAtualizado = await prisma.pet.update({
@@ -214,7 +312,7 @@ app.put('/pets/:id', async (req, res) => {
       data: {
         nome,
         especie,
-        dataNascimento: dataNascimento ? new Date(dataNascimento) : undefined, // Atualiza se o valor for fornecido
+        dataNascimento: dataNascimento ? new Date(dataNascimento) : undefined,
         descricao,
         status,
       },
@@ -222,7 +320,6 @@ app.put('/pets/:id', async (req, res) => {
 
     res.json(petAtualizado);
   } catch (error) {
-    // Erro P2025: Pet não encontrado com o ID fornecido
     if (error.code === 'P2025') {
       return res.status(404).json({ error: 'Pet não encontrado.' });
     }
@@ -231,20 +328,16 @@ app.put('/pets/:id', async (req, res) => {
   }
 });
 
-// Rota para deletar um Pet (Delete)
 app.delete('/pets/:id', async (req, res) => {
   try {
     const petId = parseInt(req.params.id);
 
-    // O Prisma deleta o registro
     await prisma.pet.delete({
       where: { id: petId },
     });
 
-    // Retorna status 204 (No Content) para indicar sucesso sem corpo de resposta
-    res.status(204).send(); 
+    res.status(204).send();
   } catch (error) {
-    // Erro P2025: Pet não encontrado com o ID fornecido
     if (error.code === 'P2025') {
       return res.status(404).json({ error: 'Pet não encontrado.' });
     }
@@ -253,7 +346,6 @@ app.delete('/pets/:id', async (req, res) => {
   }
 });
 
-// Rota para atualizar informações de um Adotante (Update)
 app.put('/adotantes/:id', async (req, res) => {
   try {
     const adotanteId = parseInt(req.params.id);
@@ -269,16 +361,16 @@ app.put('/adotantes/:id', async (req, res) => {
     if (error.code === 'P2025') {
       return res.status(404).json({ error: 'Adotante não encontrado.' });
     }
-    // Erro P2002: Email já existe (unique constraint)
     if (error.code === 'P2002') {
-      return res.status(409).json({ error: 'O e-mail informado já está sendo usado por outro adotante.' });
+      return res.status(409).json({
+        error: 'O e-mail informado já está sendo usado por outro adotante.',
+      });
     }
     console.error(error);
     res.status(500).json({ error: 'Não foi possível atualizar o Adotante.' });
   }
 });
 
-// Rota para deletar um Adotante (Delete)
 app.delete('/adotantes/:id', async (req, res) => {
   try {
     const adotanteId = parseInt(req.params.id);
@@ -287,7 +379,7 @@ app.delete('/adotantes/:id', async (req, res) => {
       where: { id: adotanteId },
     });
 
-    res.status(204).send(); 
+    res.status(204).send();
   } catch (error) {
     if (error.code === 'P2025') {
       return res.status(404).json({ error: 'Adotante não encontrado.' });
@@ -297,8 +389,33 @@ app.delete('/adotantes/:id', async (req, res) => {
   }
 });
 
+app.post('/funcionarios', async (req, res) => {
+  try {
+    const { nomeCompleto, email, senhaHash } = req.body;
 
-// 5. Inicia o servidor
+    const novoFuncionario = await prisma.usuario.create({
+      data: {
+        nomeCompleto,
+        email,
+        senhaHash,
+        role: 'Funcionario',
+      },
+    });
+
+    res.status(201).json(novoFuncionario);
+  } catch (error) {
+    if (error.code === 'P2002') {
+      return res
+        .status(409)
+        .json({ error: 'O e-mail informado já está cadastrado.' });
+    }
+    console.error(error);
+    res
+      .status(500)
+      .json({ error: 'Não foi possível cadastrar o Funcionário.' });
+  }
+});
+
 app.listen(PORT, () => {
   console.log(`Servidor rodando na porta ${PORT}`);
 });

@@ -1,50 +1,79 @@
-import { Link, useNavigate } from 'react-router-dom'; // Precisamos de useNavigate
-import { useAuth } from '../contexts/AuthContext'; // ⬅️ Importa o hook de autenticação
-import { FaPowerOff } from 'react-icons/fa';
+import React from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import '../styles/Header.css';
 import logoImagem from '../assets/adopet.png';
-
+import { useAuth } from '../contexts/AuthContext';
 
 const Header = () => {
-    // 1. Obtém a função de logout do contexto e o hook de navegação
-    const { logout } = useAuth(); 
-    const navigate = useNavigate();
+  const { user, isLoggedIn, logout } = useAuth();
+  const navigate = useNavigate();
 
-    // 2. Função que lida com o logout
-    const handleLogout = () => {
-        logout(); // Limpa o estado e o localStorage
-        navigate('/login', { replace: true }); // ⬅️ Redireciona explicitamente para a página de login
-    };
+  const userRole = user?.role;
+  const handleLogout = () => {
+    logout();
+    navigate('/', { replace: true });
+  };
 
-    return (
-        <header className='main-header'>
-            <img className='header-logo' src={logoImagem} alt='Logo da Adopet' />
+  const renderEmployeeNav = () => (
+    // CENÁRIO 1: FUNCIONÁRIO LOGADO
+    <div className='header-nav'>
+      <Link className='link-text' to='/pets'>
+        Pets
+      </Link>
+      <Link className='link-text' to='/app/cadastropet'>
+        Cadastro
+      </Link>
+      <Link className='link-text' to='/app/adotantes'>
+        Adotantes
+      </Link>
+      <button onClick={handleLogout} className='button-login' title='Logout'>
+        Logout
+      </button>
+    </div>
+  );
 
-            <nav className='header-nav'>
-                {/* Mantemos seus Links de navegação */}
-                <Link to='/pets' className='nav-link'>
-                    Ver Pets
-                </Link>
-                <Link to='/cadastro/pet' className='nav-link'>
-                    Cadastrar Pet
-                </Link>
-                <Link to='/cadastro/adotante' className='nav-link'>
-                    Cadastrar Adotante
-                </Link>
+  const renderAdopterNav = () => (
+    // CENÁRIO 2: ADOTANTE LOGADO
+    <div className='header-nav login-adopter'>
+      <Link className='link-text' to='/pets'>
+        Pets
+      </Link>
+      <button onClick={handleLogout} className='button-login' title='Logout'>
+        Logout
+      </button>
+    </div>
+  );
 
-                <span> | </span>
+  const renderPublicNav = () => (
+    // CENÁRIO 3: DESLOGADO
+    <div className='logout-user'>
+      <Link className='button-login' to='/login'>
+        Login
+      </Link>
+    </div>
+  );
 
-                {/* 3. SUBSTITUÍMOS o Link por um Botão (ou div clicável) */}
-                <button 
-                    onClick={handleLogout} // ⬅️ Chama a função de logout
-                    className='logout-button' // Adicione uma classe para estilizar
-                    title="Sair da área interna"
-                >
-                    <FaPowerOff size={20} />
-                </button>
-            </nav>
-        </header>
-    );
+  let navigationContent;
+  if (isLoggedIn) {
+    if (userRole === 'Funcionario') {
+      navigationContent = renderEmployeeNav();
+    } else if (userRole === 'Adotante') {
+      navigationContent = renderAdopterNav();
+    } else {
+      navigationContent = renderAdopterNav();
+    }
+  } else {
+    navigationContent = renderPublicNav();
+  }
+
+  return (
+    <header className='main-header'>
+      <Link to='/'>
+        <img className='header-logo' src={logoImagem} alt='Logo da Adopet' />
+      </Link>
+      <nav className='header-nav'>{navigationContent}</nav>
+    </header>
+  );
 };
 
 export default Header;

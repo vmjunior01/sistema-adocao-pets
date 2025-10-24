@@ -1,58 +1,73 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000'; 
+const API_BASE_URL = 'http://localhost:3000';
 
 const AuthContext = createContext(null);
 
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(() => {
-        const storedUser = localStorage.getItem('user');
-        return storedUser ? JSON.parse(storedUser) : null;
-    }); 
+  const [user, setUser] = useState(() => {
+    const storedUser = localStorage.getItem('user');
+    return storedUser ? JSON.parse(storedUser) : null;
+  });
 
-    const login = async (email, senha) => { 
-        try {
-            const response = await axios.post(`${API_BASE_URL}/auth/login`, { email, senha });
-            
-            const userData = {
-                ...response.data.user,
-                token: response.data.token,
-            };
+  const login = async (email, senha, loginType = 'adotante') => {
+    try {
+      const response = await axios.post(`${API_BASE_URL}/auth/login`, {
+        email,
+        senha,
+        loginType,
+      });
 
-            localStorage.setItem('user', JSON.stringify(userData));
-            setUser(userData);
-            return true;
+      const userData = {
+        ...response.data.user,
+        token: response.data.token,
+      };
 
-        } catch (error) {
-            console.error('Falha no login:', error.response?.data?.error || error.message);
-            return false;
-        }
-    };
+      localStorage.setItem('user', JSON.stringify(userData));
+      setUser(userData);
+      return true;
+    } catch (error) {
+      console.error(
+        'Falha no login:',
+        error.response?.data?.error || error.message
+      );
+      return false;
+    }
+  };
 
-    const logout = () => {
-        localStorage.removeItem('user');
-        setUser(null);
-    };
- 
-    useEffect(() => {
-        if (user && user.token) {
-    
-            axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
-        } else {
+  const logout = () => {
+    localStorage.removeItem('user');
+    setUser(null);
+  };
 
-            delete axios.defaults.headers.common['Authorization'];
-        }
-    }, [user]);
+  useEffect(() => {
+    if (user && user.token) {
+      axios.defaults.headers.common['Authorization'] = `Bearer ${user.token}`;
+    } else {
+      delete axios.defaults.headers.common['Authorization'];
+    }
+  }, [user]);
 
-    const value = {
-        user,
-        isLoggedIn: !!user,
-        login,
-        logout
-    };
+  const isLoggedIn = !!user;
+  const userRole = user?.role || '';
+  const roleLower = userRole.toLowerCase();
 
-    return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  const isEmployee =
+    isLoggedIn && (roleLower === 'funcionario' || roleLower === 'admin');
+  const isAdopter = isLoggedIn && roleLower === 'adotante';
+
+  const value = {
+    user,
+    isLoggedIn,
+    userRole,
+    isEmployee,
+    isAdopter,
+    login,
+    logout,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };
