@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import '../styles/PetDetail.css';
+import { FaTrash } from 'react-icons/fa';
 
 const API_URL = 'http://localhost:3000';
 
@@ -94,6 +95,23 @@ const PetDetailPage = () => {
     navigate(`/app/cadastropet/${pet.id}`);
   };
 
+  const handleDelete = async () => {
+    const confirmDelete = window.confirm(
+      `Tem certeza que deseja excluir ${pet.nome}? Esta ação é irreversível.`
+    );
+
+    if (!confirmDelete) return;
+
+    try {
+      await axios.delete(`${API_URL}/pets/${pet.id}`);
+      alert(`Pet ${pet.nome} excluído com sucesso!`);
+      navigate('/pets'); // redireciona para a lista
+    } catch (error) {
+      console.error('Erro ao excluir pet:', error);
+      alert('Falha ao excluir o pet. Tente novamente.');
+    }
+  };
+
   if (loading) return <h1>Carregando...</h1>;
   if (statusMessage && !pet)
     return <h1 className='error-status'>{statusMessage}</h1>;
@@ -161,9 +179,19 @@ const PetDetailPage = () => {
             )}
 
             {isEmployee && (
-              <button onClick={handleEdit} className='button-edit'>
-                EDITAR INFORMAÇÕES
-              </button>
+              <div className='edit-del'>
+                <button onClick={handleEdit} className='button-edit'>
+                  EDITAR
+                </button>
+
+                <button
+                  onClick={handleDelete}
+                  className='button-delete'
+                  title='Excluir Pet'
+                >
+                  <FaTrash size={18} style={{ marginRight: 6 }} />
+                </button>
+              </div>
             )}
 
             {!isLoggedIn && isAvailable && (

@@ -180,6 +180,31 @@ app.get('/pets/:id', async (req, res) => {
   }
 });
 
+
+app.delete('/pets/:id', async (req, res) => {
+  try {
+    const petId = parseInt(req.params.id);
+
+    const petExistente = await prisma.pet.findUnique({
+      where: { id: petId },
+    });
+
+    if (!petExistente) {
+      return res.status(404).json({ error: 'Pet não encontrado.' });
+    }
+
+    await prisma.pet.delete({
+      where: { id: petId },
+    });
+
+    res.json({ message: `Pet ${petExistente.nome} excluído com sucesso.` });
+  } catch (error) {
+    console.error('Erro ao excluir pet:', error);
+    res.status(500).json({ error: 'Erro ao excluir o pet.' });
+  }
+});
+
+
 app.post('/adotantes', async (req, res) => {
   try {
     const { nomeCompleto, email, telefone, endereco, senhaHash } = req.body;
