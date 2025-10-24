@@ -398,18 +398,16 @@ app.get('/pets/:id', async (req, res) => {
   }
 });
 
-// Rota para cadastrar um novo Funcionário (Create)
 app.post('/funcionarios', async (req, res) => {
   try {
     const { nomeCompleto, email, senhaHash } = req.body;
 
-    // Cria novo funcionário na tabela `usuario`
     const novoFuncionario = await prisma.usuario.create({
       data: {
         nomeCompleto,
         email,
         senhaHash,
-        role: 'Funcionario', // Define papel fixo
+        role: 'Funcionario',
       },
     });
 
