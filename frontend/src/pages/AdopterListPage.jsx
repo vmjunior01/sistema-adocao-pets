@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import AdopterCard from '../components/AdopterCard'; 
-import { useAuth } from '../contexts/AuthContext'; 
+import AdopterCard from '../components/AdopterCard';
+import { useAuth } from '../contexts/AuthContext';
 import '../styles/HomePage.css';
-
 
 const API_URL = 'http://localhost:3000';
 
@@ -36,7 +35,7 @@ const AdopterListPage = () => {
     };
 
     fetchAdopters();
-  }, [isEmployee]); 
+  }, [isEmployee]);
 
   if (loading) {
     return <h1 className='loading-message'>Carregando Adotantes...</h1>;
@@ -60,7 +59,6 @@ const AdopterListPage = () => {
           Nenhum adotante cadastrado no momento.
         </p>
       ) : (
-        
         <div className='pets-grid'>
           {adopters.map((adopter) => (
             <AdopterCard key={adopter.id} adopter={adopter} />

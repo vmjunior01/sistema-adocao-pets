@@ -3,7 +3,6 @@ import axios from 'axios';
 import FormContainer from '../components/FormContainer';
 import { useNavigate } from 'react-router-dom';
 
-
 const API_URL = 'http://localhost:3000';
 
 const CadastroAdotantePage = () => {
@@ -12,17 +11,15 @@ const CadastroAdotantePage = () => {
     email: '',
     telefone: '',
     endereco: '',
-    senhaHash: '', 
+    senhaHash: '',
   });
   const [statusMessage, setStatusMessage] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
   const navigate = useNavigate();
 
-
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -30,7 +27,7 @@ const CadastroAdotantePage = () => {
     setIsSuccess(false);
 
     try {
-         await axios.post(`${API_URL}/adotantes`, formData);
+      await axios.post(`${API_URL}/adotantes`, formData);
 
       setStatusMessage(
         'Cadastro realizado com sucesso! Redirecionando para o Login...'
@@ -42,7 +39,6 @@ const CadastroAdotantePage = () => {
       }, 2000);
     } catch (error) {
       console.error('Erro ao cadastrar adotante:', error);
-
 
       const errorMsg =
         error.response?.data?.error ||

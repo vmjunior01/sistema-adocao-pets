@@ -138,7 +138,7 @@ const PetDetailPage = () => {
             }`}
             style={{ fontWeight: 'bold', fontSize: '1.1em' }}
           >
-            {isAvailable ? 'Pronto para Adoção' : 'ADOTADO'}
+            {isAvailable ? 'DISPONÍVEL' : 'ADOTADO'}
           </p>
 
           {adotanteInfo && isEmployee && (

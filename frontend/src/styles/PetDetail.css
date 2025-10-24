@@ -7,7 +7,7 @@
 .detail-content-wrapper {
   display: flex;
   gap: 20px;
-  background-color: white;
+  background-color: var(--color-zero);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   border-radius: 8px;
   overflow: hidden;
@@ -32,7 +32,7 @@
 }
 
 .detail-info-box h2 {
-  border-bottom: 2px solid var(--color-text);
+  border-bottom: 2px solid var(--color-primary);
   padding-bottom: 5px;
   color: var(--color-primary);
   text-align: center;
@@ -43,9 +43,10 @@
 .detail-info-box p {
   margin-bottom: 10px;
   font-size: 1.1rem;
+  color: var(--color-text);
 }
 
-.status-disponivel {
+.detail-status.status-disponivel {
   color: #1daa3e;
   display: flex;
   justify-content: flex-end;
@@ -54,7 +55,7 @@
   padding-top: 10px;
 }
 
-.status-adotado {
+.detail-status.status-adotado {
   color: #e62a2a;
   display: flex;
   justify-content: flex-end;
@@ -87,7 +88,7 @@
 }
 
 .adotante-box h3 {
-  color: var(--color-secondary);
+  color: var(--color-text);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -98,7 +99,7 @@
 .adotante-box p {
   font-size: 14px;
   margin: 0;
-  color: var(--color-secondary);
+  color: var(--color-text);
 }
 
 @media (max-width: 768px) {

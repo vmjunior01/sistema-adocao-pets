@@ -3,7 +3,6 @@
   --color-secondary: #295f60;
   --color-background: #f8f9fa;
   --color-text: #131313;
-  --color-adopted: #ff6b6b;
   --color-zero: #ffffff;
   --color-light: #dbecec;
 
@@ -13,13 +12,13 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --color-primary: #916794;
+    --color-secondary: #613164;
     --color-background: #121212;
-    --color-zero: #1f1f1f;
-    --color-light: #2c2c2c;
-
     --color-text: #e0e0e0;
-    --color-text-light: #b0b0b0;
-    --color-primary: #a3569c;
+    --color-zero: #2e2e2e;
+    --color-light: #494949;
+
   }
 }
 

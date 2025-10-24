@@ -1,7 +1,7 @@
 /* src/styles/AdopterCard.css */
 
 .adopter-card {
-    background-color: #ffffff;
+    background-color: var(--color-zero);
     border-radius: 12px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     overflow: hidden;
@@ -54,7 +54,7 @@
 
 .id-label {
     font-weight: bold;
-    color: var(--color-secondary);
+    color: var(--color-text);
 }
 
 .detail-label {
@@ -65,7 +65,7 @@
 
 .adopter-card-description {
     font-size: 0.95rem;
-    color: var(--color-text-light);
+    color: var(--color-text);
     margin-top: 10px;
     height: 3em;
     overflow: hidden;

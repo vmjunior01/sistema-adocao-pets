@@ -6,12 +6,13 @@
 }
 
 .form-container {
-    background-color: white;
+    background-color: var(--color-zero);
     padding: 40px;
     border-radius: 8px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 500px;
+    color: var(--color-text);
 }
 
 .form-container h2 {
@@ -77,3 +78,8 @@
 textarea {
     resize: none; 
 }
+
+input, select, textarea {
+    color: #080808;
+}
+

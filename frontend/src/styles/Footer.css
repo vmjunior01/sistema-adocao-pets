@@ -1,5 +1,5 @@
 .footer {
-  background-color: #ffffff;
+  background-color: var(--color-zero);
   text-align: center;
   width: 100%;
   display: flex;
@@ -7,7 +7,7 @@
   align-items: center;
   padding: 10px 32px;
   box-shadow: 0 -2px 4px rgba(0, 0, 0, 0.1);
-  color: var(--color-text-dark);
+  color: var(--color-text);
 }
 
 .footer p {

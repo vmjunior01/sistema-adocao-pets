@@ -23,6 +23,10 @@
   margin-bottom: 10px;
 }
 
+.login-box p {
+  color: var(--color-text);
+}
+
 .error-message {
   color: #cc0000;
   background-color: #ffe0e0;
