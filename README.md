@@ -151,6 +151,6 @@ O Frontend estará rodando em http://localhost:5173
 
 ___
 
-*Projeto desenvolvido por Squad 7, para o curto de Desenvolvimento FullStack da Atlântico Avanti.*
+*Projeto desenvolvido por Squad 7, para o curso de Desenvolvimento FullStack da Atlântico Avanti.*
 
 *Equipe: [Vicente Matos Jr.](https://github.com/vmjunior01), [Mariana Santos Rocha](http://github.com/mariana4ads) e [Manuel Cunjuca Jamba](https://github.com/manueljamba).*
