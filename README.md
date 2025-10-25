@@ -145,6 +145,7 @@ O Frontend estará rodando em http://localhost:5173
 - **Area adicionar foto ao cadastro** de pets e adotantes.
 - **Header mais amigável** e com identificação de quem esta logado Ex.: "Ola, Rafael".
 - **Mural de fotos:** Pagina com fotos dos pets adotados e seus adotantes.
+- **Adicionar campo "sexo" no card/formulario do Pet**
 - **Deploy**
 
 ## Capturas de tela
