@@ -14,17 +14,19 @@ O sistema foi desenvolvido utilizando as seguintes tecnologias:
 
 ### Backend
 
-- **Linguagem:** Node.js
-- **Framework:** Express
-- **ORM:** Prisma
-- **Banco de Dados:** PostgreSQL / MySQL (Relacional)
+**Linguagem:** JavaScript
+**Ambiente de Execução:** Node.js
+**Framework:** Express
+**ORM:** Prisma
+**Banco de Dados:** PostgreSQL ou MySQL (banco relacional)
 
 ### Frontend
 
-- **Biblioteca:** ReactJS
-- **Gerenciamento de Estado:** React Context API
-- **Requisições HTTP:** **Axios** (para comunicação com a API)
-- **Estilização/UX:** **React Icons** (para ícones vetoriais)
+**Linguagens:** JavaScript e CSS
+**Biblioteca:** ReactJS
+**Gerenciamento de Estado:** React Context API
+**Requisições HTTP:** Axios (para comunicação com a API)
+**Estilização e UX:** CSS e React Icons (para ícones vetoriais)
 
 ---
 
@@ -36,7 +38,7 @@ Este projeto foi desenvolvido com uma divisão de tarefas clara, garantindo a co
 | :----------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------- |
 | **Vicente Matos Jr.**    | **Estrutura e Gestão de Pets:** Setup inicial do Node.js/Express/Prisma. Implementação completa do CRUD (Create, Read, Update, Delete) da entidade `Pet`, incluindo rotas de visualização e filtros básicos.                      | **CONCLUÍDO**                     |
 | **Mariana Santos Rocha** | **Gestão de Adotantes e Filtros:** Implementação completa do CRUD (Create, Read, Update, Delete) da entidade `Adotante`. Implementação da lógica de filtros dinâmicos na rota `GET /pets`.                                        | **CONCLUÍDO**                     |
-| **Manuel Cunjuca Jamba** | **Processo de Adoção e Lógica:** Criação do modelo `Adocao` no Prisma. [cite_start]Implementação da rota `POST /adocoes` e da **lógica de negócios** crucial de atualização automática do status do pet para "adotado"[cite: 30]. | **CONCLUÍDO**                     |
+| **Manuel Cunjuca Jamba** | **Processo de Adoção e Lógica:** Criação do modelo `Adocao` no Prisma. [cite_start]Implementação da rota `POST /adocoes` e da **lógica de negócios** crucial de atualização automática do status do pet para "adotado". | **CONCLUÍDO**                     |
 
 ---
 
@@ -73,19 +75,21 @@ Certifique-se de ter instalado:
 ### 1. Backend - Configuração Inicial e Backend (API)
 
 #### a) Clonar o Repositório
-
+```
 git clone URL_DO_SEU_REPOSITORIO
 cd sistema-adocao-pets/
+```
 
 #### b) Configurar Variáveis de Ambiente
 
-Crie um arquivo .env na raiz do projeto e insira a string de conexão com seu banco de dados. Exemplo para PostgreSQL:
-
+Crie um arquivo `.env` na raiz do projeto e insira a string de conexão com seu banco de dados. Exemplo para PostgreSQL:
+```
 DATABASE_URL="postgresql://USUARIO:SENHA@localhost:5432/adocao_pets?schema=public"
-
+```
 #### c) Instalar Dependências e Migrar o Banco
-
+```
 cd backend/
+```
 Instale os pacotes Node.js e aplique os modelos de dados (tabelas) no seu banco:
 
 ```
@@ -96,9 +100,9 @@ npx prisma migrate dev --name inicial_models
 #### d) Iniciar o Servidor (Com Recarregamento Automático)
 
 O servidor está configurado com Nodemon para recarregar automaticamente.
-
+```
 npm run dev
-
+```
 O Backend estará rodando em http://localhost:3000.
 
 ## Frontend (Aplicação Web em React)
@@ -127,7 +131,7 @@ O Frontend estará rodando em http://localhost:5173
 7. **Cadastro de Funcionários:** Acessar o formulário de cadastro de novos funcionários.
 8. **Cadastro de Adotantes/Usuários**
 9. **Modo dark:** De acordo com o sistema/navegador.
-10. **Telas responsivas:** @media com ajustes para telas menores.
+10. **Telas responsivas:** `@media` com ajustes para telas menores.
 11. **Alertas e Loadings em todas as telas:** Mensagens de alerta e sucesso para as ações que forem necessárias.
 12. **Uso do route:** para mapeamento de rotas e permissões.
 
@@ -137,6 +141,7 @@ O Frontend estará rodando em http://localhost:5173
 - **Botões de Salvar/Curtir/Favoritar:** Para que seja possível o adotante visualizar separadamente os seus preferidos.
 - **Botão dark/Light** (independente do sistema).
 - **Melhorias na lista/cards de adotantes**: mais informações sobre cadastro, mostrando qual pet cada adotante adotou.
+- **Botão hamburguer:** Melhorar a responsividade do header.
 - **Area adicionar foto ao cadastro** de pets e adotantes.
 - **Header mais amigável** e com identificação de quem esta logado Ex.: "Ola, Rafael".
 - **Mural de fotos:** Pagina com fotos dos pets adotados e seus adotantes.
@@ -145,6 +150,7 @@ O Frontend estará rodando em http://localhost:5173
 ## Capturas de tela
 
 ___
+
 *Projeto desenvolvido por Squad 7, para o curto de Desenvolvimento FullStack da Atlântico Avanti.*
 
-*Equipe: [Vicente Matos Jr.](https://github.com/vmjunior01), [Mariana Santos Rocha](http://github.com/mariana4ads) e Manuel Cunjuca Jamba.*
+*Equipe: [Vicente Matos Jr.](https://github.com/vmjunior01), [Mariana Santos Rocha](http://github.com/mariana4ads) e [Manuel Cunjuca Jamba](https://github.com/manueljamba).*
