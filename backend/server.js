@@ -17,7 +17,7 @@ app.use(cors(corsOptions));
 app.use(express.json());
 
 app.post('/auth/login', async (req, res) => {
-  const { email, senha, loginType } = req.body;
+  const {email, senha, loginType} = req.body;
   const emailLimpo = email ? email.trim() : null;
   const senhaLimpa = senha ? senha.trim() : null;
 
@@ -32,7 +32,7 @@ app.post('/auth/login', async (req, res) => {
     } else {
       return res
         .status(400)
-        .json({ error: 'Tipo de login inválido ou não especificado.' });
+        .json({ error: 'Tipo de login inválido ou não especificado, verifique seus dados.' });
     }
 
     usuario = await tabelaPrisma.findUnique({
